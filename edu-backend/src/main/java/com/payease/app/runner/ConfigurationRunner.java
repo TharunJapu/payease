@@ -1,52 +1,38 @@
-package com.payease.app.service;
+package com.payease.app.runner;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Configuration;
 
-import com.payease.app.IDao.IGenericDao;
-import com.payease.app.dao.UserDao;
-import com.payease.app.helper.RequestObject;
 import com.payease.app.model.User;
+import com.payease.app.service.UserService;
 
-@Service("userService")
-public class UserService {
-
-	@Autowired
-	IGenericDao<User> genericDao;
+@Configuration
+public class ConfigurationRunner implements ApplicationRunner {
 
 	@Autowired
-	UserDao userDao;
+	UserService userService;
 
-	public User create(User distributeUser) {
-		try {
-			String randomPass = this.getAlphaNumericString(9);
-			System.out.println("-----" + randomPass);
-			distributeUser.setPassword(this.computeSHA512(randomPass));
-		} catch (Exception e) {
-			e.printStackTrace();
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		User adminUser = userService.findOne("adminuser");
+		if (adminUser == null) {
+			adminUser = new User();
+			adminUser.setId("adminuser");
+			adminUser.setBusinessName("adminbusiness");
+			adminUser.setFullName("Srikanth Reddy");
+			adminUser.setEmailId("srikanthreddyj8179@gmail.com");
+			adminUser.setPhNo("8179110896");
+			adminUser.setUserName("adminuser");
+			adminUser.setPassword(this.computeSHA512("Srikanth@123"));
+			adminUser.setAdminUser(true);
+			userService.create(adminUser);
 		}
-		return genericDao.create(distributeUser);
-	}
-
-	public User findOne(String id) {
-		return genericDao.fineOne(id);
-	}
-
-	public List<User> getAll() {
-		return genericDao.getAll();
-	}
-
-	public User update(User data) {
-		return genericDao.update(data);
-	}
-
-	public List<User> findByData(RequestObject data) {
-		return userDao.findByData(data);
 	}
 
 	private String getAlphaNumericString(int n) {
