@@ -1,4 +1,4 @@
-package com.myproject.app.controller;
+package com.payease.app.controller;
 
 import java.util.Optional;
 
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.myproject.app.helper.RequestObject;
-import com.myproject.app.helper.ResponseObject;
-import com.myproject.app.model.User;
-import com.myproject.app.service.UserService;
-import com.myproject.app.utility.MapperUtility;
+import com.payease.app.helper.RequestObject;
+import com.payease.app.helper.ResponseObject;
+import com.payease.app.model.User;
+import com.payease.app.service.UserService;
+import com.payease.app.utility.MapperUtility;
 
 @RestController
 @RequestMapping("/api/dstuser")
