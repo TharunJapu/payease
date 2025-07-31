@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import com.payease.app.utility.MapperUtility;
 
 @RestController
 @RequestMapping("/api/dstuser")
+@CrossOrigin("*")
 public class UserController {
 
 	@Autowired
@@ -63,15 +65,13 @@ public class UserController {
 
 	}
 	
-	@RequestMapping(value = { "/inq" }, method = RequestMethod.POST, consumes = {
-			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
+	@RequestMapping(value = { "/inq" }, method = RequestMethod.POST,  produces = {
 					MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public ResponseObject inquiry(@RequestParam String id) {
+	public ResponseObject inquiry(@RequestParam("id") String id) {
 		ResponseObject response = new ResponseObject();
 		response.setObject(userService.findOne(id));
 		response.setStatus(true);
 		return response;
-
 	}
 	
 	@PostMapping("/upd")
@@ -80,7 +80,7 @@ public class UserController {
 		return Optional.of(request).filter(req -> req.getReqType().equals("UPDATE")).map(data -> {
 			User user = MapperUtility.buildMapperForIgnoreAnnotation()
 					.convertValue(data.getObject(), User.class);
-			user = userService.create(user);
+			user = userService.update(user);
 			response.setStatus(true);
 			response.setObject(user);
 			return response;
