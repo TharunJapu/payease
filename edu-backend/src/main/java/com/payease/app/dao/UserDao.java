@@ -10,7 +10,7 @@ import com.payease.app.helper.RequestObject;
 import com.payease.app.model.User;
 
 @Repository
-public class UserDao extends GenericDao<User>{
+public class UserDao extends GenericDao<User> {
 
 	@Override
 	public Class<User> getEntityClass() {
@@ -28,6 +28,12 @@ public class UserDao extends GenericDao<User>{
 			});
 		}
 		return mongoTemplate.find(query, getEntityClass());
+	}
+
+	public User findByUserName(String userName) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("userName").is(userName));
+		return mongoTemplate.findOne(query, getEntityClass());
 	}
 
 }
