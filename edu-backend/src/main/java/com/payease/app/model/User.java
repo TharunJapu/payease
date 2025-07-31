@@ -50,7 +50,7 @@ public class User {
 	
 	private Boolean retailUser;
 	
-	private Boolean distributeId;
+	private String distributeId;
 	
 	private String profilePicLocation;
 }
