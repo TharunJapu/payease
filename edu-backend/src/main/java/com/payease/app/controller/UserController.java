@@ -1,0 +1,93 @@
+package com.myproject.app.controller;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.myproject.app.helper.RequestObject;
+import com.myproject.app.helper.ResponseObject;
+import com.myproject.app.model.User;
+import com.myproject.app.service.UserService;
+import com.myproject.app.utility.MapperUtility;
+
+@RestController
+@RequestMapping("/api/dstuser")
+public class UserController {
+
+	@Autowired
+	UserService userService;
+
+	@PostMapping("/cre")
+	public ResponseObject create(@RequestBody RequestObject request) {
+		ResponseObject response = new ResponseObject();
+		return Optional.of(request).filter(req -> req.getReqType().equals("CREATE")).map(data -> {
+			User user = MapperUtility.buildMapperForIgnoreAnnotation()
+					.convertValue(data.getObject(), User.class);
+			user = userService.create(user);
+			response.setStatus(true);
+			response.setObject(user);
+			return response;
+		}).orElseGet(() -> {
+			response.setErrorMsg("invaild req");
+			return response;
+		});
+
+	}
+	
+	@RequestMapping(value = { "/getall" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
+					MediaType.APPLICATION_XML_VALUE })
+	public ResponseObject getAll() {
+		ResponseObject response = new ResponseObject();
+		response.setObject(userService.getAll());
+		response.setStatus(true);
+		return response;
+
+	}
+	
+	@RequestMapping(value = { "/filterData" }, method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
+					MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseObject filterData(@RequestBody RequestObject data) {
+		ResponseObject response = new ResponseObject();
+		response.setObject(userService.findByData(data));
+		response.setStatus(true);
+		return response;
+
+	}
+	
+	@RequestMapping(value = { "/inq" }, method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
+					MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseObject inquiry(@RequestParam String id) {
+		ResponseObject response = new ResponseObject();
+		response.setObject(userService.findOne(id));
+		response.setStatus(true);
+		return response;
+
+	}
+	
+	@PostMapping("/upd")
+	public ResponseObject update(@RequestBody RequestObject request) {
+		ResponseObject response = new ResponseObject();
+		return Optional.of(request).filter(req -> req.getReqType().equals("UPDATE")).map(data -> {
+			User user = MapperUtility.buildMapperForIgnoreAnnotation()
+					.convertValue(data.getObject(), User.class);
+			user = userService.create(user);
+			response.setStatus(true);
+			response.setObject(user);
+			return response;
+		}).orElseGet(() -> {
+			response.setErrorMsg("invaild req");
+			return response;
+		});
+
+	}
+}
