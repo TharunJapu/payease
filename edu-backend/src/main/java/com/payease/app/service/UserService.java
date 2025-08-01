@@ -75,11 +75,13 @@ public class UserService {
 	public ResponseObject signupUser(User user) {
 		ResponseObject responseObject = new ResponseObject();
 		if (Boolean.TRUE.equals(user.getDistributeUser())) {
-			user.setDistributeId(this.getAlphaNumericString(8));
+//			user.setDistributeId(this.getAlphaNumericString(8));
 		}
 
 		try {
-			user.setPassword(this.computeSHA512(user.getPassword()));
+			String randomPass = this.getAlphaNumericString(9);
+			System.out.println("randompass :"+randomPass);
+			user.setPassword(this.computeSHA512(randomPass));
 		} catch (Exception e) {
 			responseObject.setStatus(false);
 			responseObject.setErrorMsg("Password encryption failed.");
