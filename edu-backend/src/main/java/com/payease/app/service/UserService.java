@@ -79,7 +79,9 @@ public class UserService {
 		}
 
 		try {
-			user.setPassword(this.computeSHA512(this.getAlphaNumericString(9)));
+			String randomPass = this.getAlphaNumericString(9);
+			System.out.println("randompass :"+randomPass);
+			user.setPassword(this.computeSHA512(randomPass));
 		} catch (Exception e) {
 			responseObject.setStatus(false);
 			responseObject.setErrorMsg("Password encryption failed.");
