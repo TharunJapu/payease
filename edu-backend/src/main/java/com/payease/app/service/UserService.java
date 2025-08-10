@@ -121,8 +121,8 @@ public class UserService {
 		}
 
 		try {
-			String encryptedInputPassword = computeSHA512(user.getPassword());
-			if (!encryptedInputPassword.equals(existingUser.getPassword())) {
+//			String encryptedInputPassword = computeSHA512(user.getPassword());
+			if (!existingUser.getPassword().equals(user.getPassword())) {
 				return buildErrorResponse("Incorrect username or password");
 			}
 		} catch (Exception e) {
