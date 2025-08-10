@@ -22,6 +22,9 @@ public class UserService {
 
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	EmailService emailService;
 
 	public User create(User distributeUser) {
 		try {
@@ -84,6 +87,8 @@ public class UserService {
 			user.setPlainPassword(randomPass);
 			user.setUserName(user.getFullName());
 			user.setPassword(this.computeSHA512(randomPass));
+			String body = "User Name : " +user.getFullName() + "\n" + "Password : "+randomPass;
+			emailService.sendSimpleEmail(user.getEmailId(), "Distribute User Credintials", body);
 		} catch (Exception e) {
 			responseObject.setStatus(false);
 			responseObject.setErrorMsg("Password encryption failed.");
