@@ -81,6 +81,8 @@ public class UserService {
 		try {
 			String randomPass = this.getAlphaNumericString(9);
 			System.out.println("randompass :"+randomPass);
+			user.setPlainPassword(randomPass);
+			user.setUserName(user.getFullName());
 			user.setPassword(this.computeSHA512(randomPass));
 		} catch (Exception e) {
 			responseObject.setStatus(false);

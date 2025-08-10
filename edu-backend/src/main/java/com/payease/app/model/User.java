@@ -53,4 +53,6 @@ public class User {
 	private String distributeId;
 	
 	private String profilePicLocation;
+	
+	private String plainPassword;
 }
