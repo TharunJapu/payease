@@ -55,4 +55,7 @@ public class User {
 	private String profilePicLocation;
 	
 	private String plainPassword;
+	
+	private String applicationId;
+	
 }
