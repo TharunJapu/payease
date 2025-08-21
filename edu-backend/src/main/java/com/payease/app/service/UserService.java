@@ -32,6 +32,7 @@ public class UserService {
 			System.out.println("-----" + randomPass);
 			user.setPassword(this.computeSHA512(randomPass));
 			user.setUserName(this.getAlphaNumericString(12));
+			user.setId(user.getUserName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,6 +89,8 @@ public class UserService {
 			user.setPlainPassword(randomPass);
 			user.setUserName(this.getAlphaNumericString(12));
 			user.setPassword(this.computeSHA512(randomPass));
+			user.setDistributeUser(true);
+			user.setId(user.getUserName());
 			String body = "User Name : " +user.getFullName() + "\n" + "Password : "+randomPass;
 			emailService.sendSimpleEmail(user.getEmailId(), "Distribute User Credintials", body);
 		} catch (Exception e) {
