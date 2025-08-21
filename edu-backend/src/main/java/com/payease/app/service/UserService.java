@@ -26,15 +26,16 @@ public class UserService {
 	@Autowired
 	EmailService emailService;
 
-	public User create(User distributeUser) {
+	public User create(User user) {
 		try {
 			String randomPass = this.getAlphaNumericString(9);
 			System.out.println("-----" + randomPass);
-			distributeUser.setPassword(this.computeSHA512(randomPass));
+			user.setPassword(this.computeSHA512(randomPass));
+			user.setUserName(this.getAlphaNumericString(12));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return genericDao.create(distributeUser);
+		return genericDao.create(user);
 	}
 
 	public User findOne(String id) {
@@ -85,7 +86,7 @@ public class UserService {
 			String randomPass = this.getAlphaNumericString(9);
 			System.out.println("randompass :"+randomPass);
 			user.setPlainPassword(randomPass);
-			user.setUserName(user.getFullName());
+			user.setUserName(this.getAlphaNumericString(12));
 			user.setPassword(this.computeSHA512(randomPass));
 			String body = "User Name : " +user.getFullName() + "\n" + "Password : "+randomPass;
 			emailService.sendSimpleEmail(user.getEmailId(), "Distribute User Credintials", body);
