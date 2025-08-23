@@ -9,11 +9,18 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.payease.app.IDao.IGenericDao;
 import com.payease.app.model.User;
 import com.payease.app.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Configuration
+@Slf4j
 public class ConfigurationRunner implements ApplicationRunner {
+
+	@Autowired
+	IGenericDao<User> genericDao;
 
 	@Autowired
 	UserService userService;
@@ -30,8 +37,14 @@ public class ConfigurationRunner implements ApplicationRunner {
 			adminUser.setPhNo("8179110896");
 			adminUser.setUserName("adminuser");
 			adminUser.setPassword(this.computeSHA512("Srikanth@123"));
+			log.info("password...................{}", this.computeSHA512("Srikanth@123"));
 			adminUser.setAdminUser(true);
-			userService.create(adminUser);
+			log.info("adminUser...................{}", adminUser);
+//			User user =   userService.create(adminUser);
+			adminUser.setUserName(this.getAlphaNumericString(12));
+			adminUser.setId(adminUser.getUserName());
+			genericDao.create(adminUser);
+			log.info("adminUser 2 ...................{}", adminUser);
 		}
 	}
 
