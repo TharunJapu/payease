@@ -50,6 +50,7 @@ public class UserController {
 		ResponseObject response = new ResponseObject();
 		response.setObject(userService.getAll());
 		response.setStatus(true);
+		response.setErrorMsg("Users retrieved successfully.");
 		return response;
 
 	}
@@ -71,6 +72,7 @@ public class UserController {
 		ResponseObject response = new ResponseObject();
 		response.setObject(userService.findOne(id));
 		response.setStatus(true);
+		response.setErrorMsg("User details fetched successfully.");
 		return response;
 	}
 	
@@ -83,6 +85,7 @@ public class UserController {
 			user = userService.update(user);
 			response.setStatus(true);
 			response.setObject(user);
+			response.setErrorMsg("User updated successfully.");
 			return response;
 		}).orElseGet(() -> {
 			response.setErrorMsg("invaild req");

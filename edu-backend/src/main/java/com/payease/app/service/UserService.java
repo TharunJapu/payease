@@ -103,6 +103,7 @@ public class UserService {
 		if (result != null) {
 			responseObject.setObject(result);
 			responseObject.setStatus(true);
+			responseObject.setErrorMsg("User registration completed successfully.");
 		} else {
 			responseObject.setObject(null);
 			responseObject.setStatus(false);
@@ -135,6 +136,7 @@ public class UserService {
 
 		response.setStatus(true);
 		response.setObject(existingUser);
+		response.setErrorMsg("Welcome! You have logged in successfully.");
 		return response;
 	}
 
