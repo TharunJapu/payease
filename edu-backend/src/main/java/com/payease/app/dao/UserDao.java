@@ -35,5 +35,4 @@ public class UserDao extends GenericDao<User> {
 		query.addCriteria(Criteria.where("userName").is(userName));
 		return mongoTemplate.findOne(query, getEntityClass());
 	}
-
 }

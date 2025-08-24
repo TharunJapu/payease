@@ -6,6 +6,7 @@ import java.security.SecureRandom;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.payease.app.IDao.IGenericDao;
@@ -43,8 +44,11 @@ public class UserService {
 		return genericDao.fineOne(id);
 	}
 
-	public List<User> getAll() {
-		return genericDao.getAll();
+//	public List<User> getAll() {
+//		return genericDao.getAll();
+//	}
+	public Page<User> getAll(RequestObject requestObj) {
+		return genericDao.getAll(requestObj);
 	}
 
 	public User update(User data) {

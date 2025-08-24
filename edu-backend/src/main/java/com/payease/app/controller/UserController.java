@@ -43,12 +43,20 @@ public class UserController {
 
 	}
 	
-	@RequestMapping(value = { "/getall" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE })
-	public ResponseObject getAll() {
+	// @RequestMapping(value = { "/getall" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE,
+	// 		MediaType.APPLICATION_XML_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE,
+	// 				MediaType.APPLICATION_XML_VALUE })
+	// public ResponseObject getAll() {
+	// 	ResponseObject response = new ResponseObject();
+	// 	response.setObject(userService.getAll());
+	// 	response.setStatus(true);
+	// 	response.setErrorMsg("Users retrieved successfully.");
+	// 	return response;
+	// }
+	@PostMapping("/getall")
+	public ResponseObject getAll(@RequestBody RequestObject request) {
 		ResponseObject response = new ResponseObject();
-		response.setObject(userService.getAll());
+		response.setObject(userService.getAll(request));
 		response.setStatus(true);
 		response.setErrorMsg("Users retrieved successfully.");
 		return response;

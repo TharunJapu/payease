@@ -1,6 +1,8 @@
 package com.payease.app.IDao;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+
+import com.payease.app.helper.RequestObject;
 
 public interface IGenericDao<T> {
 
@@ -10,7 +12,7 @@ public interface IGenericDao<T> {
 
 	Class<T> getEntityClass();
 	
-	List<T> getAll();
+	Page<T> getAll(RequestObject requestObjO);
 	
 	T update(T data);
 	
