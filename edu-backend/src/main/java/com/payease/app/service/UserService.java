@@ -91,7 +91,7 @@ public class UserService {
 			user.setPassword(this.computeSHA512(randomPass));
 			user.setDistributeUser(true);
 			user.setId(user.getUserName());
-			String body = "User Name : " +user.getFullName() + "\n" + "Password : "+randomPass;
+			String body = "User Name : " +user.getUserName() + "\n" + "Password : "+randomPass;
 			emailService.sendSimpleEmail(user.getEmailId(), "Distribute User Credintials", body);
 		} catch (Exception e) {
 			responseObject.setStatus(false);
