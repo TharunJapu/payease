@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.payease.app.IDao.IGenericDao;
+import com.payease.app.constants.EnumHelper.UserStatus;
 import com.payease.app.dao.UserDao;
 import com.payease.app.helper.RequestObject;
 import com.payease.app.helper.ResponseObject;
@@ -34,6 +35,7 @@ public class UserService {
 			user.setPassword(this.computeSHA512(randomPass));
 			user.setUserName(this.getAlphaNumericString(12));
 			user.setId(user.getUserName());
+			user.setStatus(UserStatus.PENDING);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

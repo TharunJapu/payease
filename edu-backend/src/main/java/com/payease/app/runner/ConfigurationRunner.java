@@ -10,6 +10,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.payease.app.IDao.IGenericDao;
+import com.payease.app.constants.EnumHelper.UserRole;
+import com.payease.app.constants.EnumHelper.UserStatus;
 import com.payease.app.model.User;
 import com.payease.app.service.UserService;
 
@@ -37,6 +39,7 @@ public class ConfigurationRunner implements ApplicationRunner {
 			adminUser.setPhNo("8179110896");
 			adminUser.setUserName("adminuser");
 			adminUser.setPassword(this.computeSHA512("Srikanth@123"));
+			adminUser.setStatus(UserStatus.ACTIVE);
 			log.info("password...................{}", this.computeSHA512("Srikanth@123"));
 			adminUser.setAdminUser(true);
 			log.info("adminUser...................{}", adminUser);
