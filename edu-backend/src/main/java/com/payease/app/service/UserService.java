@@ -166,19 +166,50 @@ public class UserService {
 			user.setPassword(this.computeSHA512(randomPass));
 			user.setDistributeUser(true);
 			user.setId(user.getUserName());
+//			StringBuilder body = new StringBuilder();
+//			body.append("Hello ").append(user.getFullName()).append(",\n\n");
+//			body.append("Thank you for registering with EduSoft Academy!\n\n");
+//			body.append("Here are your Login details:\n");
+//			body.append("User Name: ").append(user.getUserName()).append("\n");
+//			body.append("Password: ").append(randomPass).append("\n\n");
+//			body.append("Registered Courses:\n");
+//			for (String course : user.getCourseName()) {
+//			    body.append(" - ").append(course).append("\n");
+//			}
+//			body.append("\nHappy Learning!\n");
+//			body.append("EduSoft Academy Team");
 			StringBuilder body = new StringBuilder();
-			body.append("Hello ").append(user.getFullName()).append(",\n\n");
-			body.append("Thank you for registering with EduSoft Academy!\n\n");
-			body.append("Here are your Login details:\n");
-			body.append("User Name: ").append(user.getUserName()).append("\n");
-			body.append("Password: ").append(randomPass).append("\n\n");
-			body.append("Registered Courses:\n");
-			for (String course : user.getCourseName()) {
-			    body.append(" - ").append(course).append("\n");
-			}
-			body.append("\nHappy Learning!\n");
-			body.append("EduSoft Academy Team");
-			emailService.sendSimpleEmail(user.getEmailId(), "Welcome to EduSoft Academy", body.toString());
+
+			body.append("Dear ").append(user.getFullName()).append(",\n\n");
+			body.append("We’re excited to welcome you to ")
+			    .append(String.join(", ", user.getCourseName()))
+			    .append(", offered by EduSoft Academy.\n");
+			body.append("Congratulations on taking this step to invest in your learning journey!\n\n");
+
+			body.append("What Happens Next?\n\n");
+			body.append("Course Access: You can now log in to your account at ")
+			    .append("http://edusoftacademy.net").append(" using your registered email.\n\n");
+			body.append("Course Material: All lessons, videos, and assignments are available in your dashboard.\n\n");
+			body.append("Support: Our team is here to help with any queries at support@edusoftacademy.com.\n\n");
+
+			body.append("Learning Tips:\n");
+			body.append(" - Set aside dedicated time each week to go through modules.\n");
+			body.append(" - Participate actively in discussions and assignments to get the most out of the course.\n");
+			body.append(" - Track your progress in your dashboard to stay motivated.\n\n");
+
+			body.append("Certificates:\n");
+			body.append("Upon successful completion of the course, you’ll receive a Certificate of Completion, ")
+			    .append("which you can share on your resume or LinkedIn profile.\n\n");
+
+			body.append("We’re delighted to have you on board and look forward to seeing you succeed.\n\n");
+			body.append("Welcome once again, and happy learning!\n\n");
+			body.append("Warm regards,\n");
+			body.append("EduSoft Academy");
+			emailService.sendSimpleEmail(
+				    user.getEmailId(),
+				    "Welcome to " + String.join(", ", user.getCourseName()) + " – Let’s Get Started!",
+				    body.toString()
+				);
 		} catch (Exception e) {
 			responseObject.setStatus(false);
 			responseObject.setErrorMsg("Password encryption failed.");
