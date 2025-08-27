@@ -169,7 +169,7 @@ public class UserService {
 			StringBuilder body = new StringBuilder();
 			body.append("Hello ").append(user.getFullName()).append(",\n\n");
 			body.append("Thank you for registering with EduSoft Academy!\n\n");
-			body.append("Here are your details:\n");
+			body.append("Here are your Login details:\n");
 			body.append("User Name: ").append(user.getUserName()).append("\n");
 			body.append("Password: ").append(randomPass).append("\n\n");
 			body.append("Registered Courses:\n");
