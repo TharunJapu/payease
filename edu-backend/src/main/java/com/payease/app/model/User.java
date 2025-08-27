@@ -21,6 +21,8 @@ public class User {
 	private String id;
 
 	private String fullName;
+	
+	private String courseName;
 
 	private String businessName;
 
