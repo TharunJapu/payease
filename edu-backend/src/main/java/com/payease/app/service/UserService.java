@@ -24,7 +24,6 @@ public class UserService {
 
 	@Autowired
 	UserDao userDao;
-	
 	@Autowired
 	EmailService emailService;
 
@@ -91,13 +90,13 @@ public class UserService {
 
 		try {
 			String randomPass = this.getAlphaNumericString(9);
-			System.out.println("randompass :"+randomPass);
+			System.out.println("randompass :" + randomPass);
 			user.setPlainPassword(randomPass);
 			user.setUserName(this.getAlphaNumericString(12));
 			user.setPassword(this.computeSHA512(randomPass));
 			user.setDistributeUser(true);
 			user.setId(user.getUserName());
-			String body = "User Name : " +user.getUserName() + "\n" + "Password : "+randomPass;
+			String body = "User Name : " + user.getUserName() + "\n" + "Password : " + randomPass;
 			emailService.sendSimpleEmail(user.getEmailId(), "Distribute User Credintials", body);
 		} catch (Exception e) {
 			responseObject.setStatus(false);
@@ -122,7 +121,7 @@ public class UserService {
 	public ResponseObject signinUser(User user) {
 		ResponseObject response = new ResponseObject();
 
-		if (user.getUserName()==null || user.getPassword()==null) {
+		if (user.getUserName() == null || user.getPassword() == null) {
 			return buildErrorResponse("Username and password must not be empty");
 		}
 
@@ -152,5 +151,50 @@ public class UserService {
 		response.setErrorMsg(message);
 		response.setObject(null);
 		return response;
+	}
+	public ResponseObject courseSignupUser(User user) {
+		ResponseObject responseObject = new ResponseObject();
+		if (Boolean.TRUE.equals(user.getDistributeUser())) {
+//			user.setDistributeId(this.getAlphaNumericString(8));
+		}
+
+		try {
+			String randomPass = this.getAlphaNumericString(9);
+			System.out.println("randompass :" + randomPass);
+			user.setPlainPassword(randomPass);
+			user.setUserName(this.getAlphaNumericString(12));
+			user.setPassword(this.computeSHA512(randomPass));
+			user.setDistributeUser(true);
+			user.setId(user.getUserName());
+			StringBuilder body = new StringBuilder();
+			body.append("Hello ").append(user.getFullName()).append(",\n\n");
+			body.append("Thank you for registering with EduSoft Academy!\n\n");
+			body.append("Here are your details:\n");
+			body.append("User Name: ").append(user.getUserName()).append("\n");
+			body.append("Password: ").append(randomPass).append("\n\n");
+			body.append("Registered Courses:\n");
+			for (String course : user.getCourseName()) {
+			    body.append(" - ").append(course).append("\n");
+			}
+			body.append("\nHappy Learning!\n");
+			body.append("EduSoft Academy Team");
+			emailService.sendSimpleEmail(user.getEmailId(), "Welcome to EduSoft Academy", body.toString());
+		} catch (Exception e) {
+			responseObject.setStatus(false);
+			responseObject.setErrorMsg("Password encryption failed.");
+			return responseObject;
+		}
+		User result = userDao.create(user);
+
+		if (result != null) {
+			responseObject.setObject(result);
+			responseObject.setStatus(true);
+			responseObject.setErrorMsg("Course registration completed, Mail Sent successfully.");
+		} else {
+			responseObject.setObject(null);
+			responseObject.setStatus(false);
+			responseObject.setErrorMsg("User creation failed in database.");
+		}
+		return responseObject;
 	}
 }

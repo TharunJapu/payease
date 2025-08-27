@@ -47,6 +47,17 @@ public class AuthController {
 			response.setErrorMsg("Invalid request type. Expected 'SIGNIN'.");
 			return response;
 		});
-
+	}
+	@PostMapping("/courseSignup")
+	public ResponseObject CouseRegister(@RequestBody RequestObject request) {
+		return Optional.ofNullable(request).filter(req -> "SIGNUP".equalsIgnoreCase(req.getReqType())).map(data -> {
+			User user = MapperUtility.buildMapperForIgnoreAnnotation().convertValue(data.getObject(), User.class);
+			return userService.courseSignupUser(user);
+		}).orElseGet(() -> {
+			ResponseObject response = new ResponseObject();
+			response.setStatus(false);
+			response.setErrorMsg("Invalid request type. Expected 'SIGNUP'.");
+			return response;
+		});
 	}
 }

@@ -10,22 +10,12 @@ public class EnumHelper {
 	}
 	
 	public enum UserStatus {
-	    ACTIVE("Active"),
-	    INACTIVE("Inactive"),
-	    SUSPENDED("Suspended"),
-	    PENDING("Pending"),
-	    DELETED("Deleted");
-
-	    private final String label;
-
-	    UserStatus(String label) {
-	        this.label = label;
-	    }
-
-	    public String getLabel() {
-	        return label;
-	    }
+	    ACTIVE,
+	    INACTIVE,
+	    SUSPENDED,
+	    PENDING
 	}
+
 
 
 }

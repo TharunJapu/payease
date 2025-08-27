@@ -1,5 +1,7 @@
 package com.payease.app.model;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,8 +23,8 @@ public class User {
 	private String id;
 
 	private String fullName;
-	
-	private String courseName;
+
+	private List<String> courseName;
 
 	private String businessName;
 
@@ -65,9 +67,7 @@ public class User {
 	private String applicationId;
 
 	private UserStatus status;
-	
 	private String retailerAccountDetails;
-	
 	private String distributorAccountDetails;
 
 }
